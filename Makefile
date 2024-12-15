@@ -19,7 +19,7 @@ $(NAME): maybe_clean_name $(OBJS) $(BUILD_DIR)/main.o
 		$(CC) $(CFLAGS) -o $@ $(filter-out maybe_clean_name, $^), \
 		@echo "make: Nothing to be done for \`all'.")
 
-$(BUILD_DIR)/%.o: %.c gnl_bonus.h pipex_bonus.h
+$(BUILD_DIR)/%.o: %.c pipex_bonus.h
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 bonus: $(BUILD_DIR)/ $(.BONUS)

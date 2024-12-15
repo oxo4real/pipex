@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 16:52:32 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/14 18:58:52 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/15 09:47:18 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <limits.h>
-# include "gnl_bonus.h"
 
 typedef struct s_list
 {
@@ -26,6 +25,15 @@ typedef struct s_list
 	struct s_list	*next;
 }				t_list;
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+
+size_t	ft_strlen(const char *s);
+char	*ft_strdup(const char *s);
+char	*custom_strjoin(char *s1, char *s2);
+int		find_chr(char *str, char c);
+char	*get_next_line(int fd);
 t_list	*make_list(int num_of_pipes, int read_file, int write_file);
 t_list	*lst_last(t_list *lst);
 t_list	*lst_new(int read_fd);

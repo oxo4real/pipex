@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "gnl_bonus.h"
+#include "pipex_bonus.h"
 
 // frees the stash or the buffer or both
 void	*special_free(char *buffer, char **stash)
