@@ -1,105 +1,159 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <ctype.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parser.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/12/16 18:11:47 by aaghzal           #+#    #+#             */
+/*   Updated: 2024/12/16 20:11:05 by aaghzal          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-#define MAX_TOKENS 100     // Maximum number of tokens
-#define MAX_TOKEN_LENGTH 1024 // Maximum length of each token
+#include "pipex_bonus.h"
 
-// Function to allocate memory for the tokens array
-char	**allocate_tokens() {
-    char **tokens = malloc(MAX_TOKENS * sizeof(char *));
-    if (!tokens) {
-        perror("malloc");
-        exit(EXIT_FAILURE);
-    }
-    return tokens;
+const char	*skip_spaces(const char *ptr)
+{
+	const char	*result;
+
+	result = ptr;
+	while (ft_isspace(*result))
+		result++;
+	return (result);
 }
 
-// Function to allocate memory for an individual token
-char	*allocate_token() {
-    char *token = malloc(MAX_TOKEN_LENGTH * sizeof(char));
-    if (!token) {
-        perror("malloc");
-        exit(EXIT_FAILURE);
-    }
-    return token;
+int	count_tokens(const char *input)
+{
+	int			count;
+	const char	*ptr;
+	char		quote;
+
+	count = 0;
+	ptr = input;
+	while (*ptr != '\0')
+	{
+		ptr = skip_spaces(ptr);
+		if (*ptr == '\0')
+			break ;
+		if (*ptr == '"' || *ptr == '\'')
+		{
+			quote = *ptr++;
+			while (*ptr != '\0' && *ptr != quote && ptr++)
+				;
+			if (*ptr == quote && ptr++)
+				ptr++;
+		}
+		else
+			while (*ptr != '\0' && !ft_isspace(*ptr) && ptr++)
+				;
+		count++;
+	}
+	return (count);
 }
 
-// Function to skip leading spaces
-const char	*skip_spaces(const char *ptr) {
-    while (isspace(*ptr)) {
-        ptr++;
-    }
-    return ptr;
+const char	*extract_quoted_string(const char *ptr, char **token)
+{
+	char		quote;
+	size_t		length;
+	const char	*start;
+
+	quote = *ptr++;
+	length = 0;
+	start = ptr;
+	while (*ptr != '\0' && *ptr != quote)
+	{
+		length++;
+		ptr++;
+	}
+	*token = malloc((length + 1) * sizeof(char));
+	if (!*token)
+		return (NULL);
+	ft_strncpy(*token, start, length);
+	(*token)[length] = '\0';
+	if (*ptr == quote)
+		ptr++;
+	return (ptr);
 }
 
-// Function to extract a quoted string (single or double quotes)
-const char	*extract_quoted_string(const char *ptr, char *token) {
-    char quote = *ptr; // Remember the type of quote (' or ")
-    ptr++; // Skip opening quote
-    int i = 0;
-    while (*ptr != '\0' && *ptr != quote) {
-        token[i++] = *ptr++;
-    }
-    if (*ptr == quote) {
-        ptr++; // Skip closing quote
-    }
-    token[i] = '\0'; // Null-terminate the token
-    return ptr;
+const char	*extract_unquoted_string(const char *ptr, char **token)
+{
+	size_t		length;
+	const char	*start;
+
+	length = 0;
+	start = ptr;
+	while (*ptr != '\0' && !ft_isspace(*ptr))
+	{
+		length++;
+		ptr++;
+	}
+	*token = malloc((length + 1) * sizeof(char));
+	if (!*token)
+		return (NULL);
+	ft_strncpy(*token, start, length);
+	(*token)[length] = '\0';
+	return (ptr);
 }
 
-// Function to extract an unquoted string
-const char	*extract_unquoted_string(const char *ptr, char *token) {
-    int i = 0;
-    while (*ptr != '\0' && !isspace(*ptr)) {
-        token[i++] = *ptr++;
-    }
-    token[i] = '\0'; // Null-terminate the token
-    return ptr;
+char	**split_with_quotes(const char *ptr)
+{
+	char		**tokens;
+	int			index;
+	int			count;
+
+	count = count_tokens(ptr);
+	tokens = malloc(count * sizeof(char *) + 1);
+	if (!tokens)
+		return (NULL);
+	tokens[count] = NULL;
+	index = 0;
+	while (*ptr != '\0' && index < count)
+	{
+		ptr = skip_spaces(ptr);
+		if (*ptr == '\0')
+			break ;
+		if (*ptr == '"' || *ptr == '\'')
+			ptr = extract_quoted_string(ptr, &tokens[index]);
+		else
+			ptr = extract_unquoted_string(ptr, &tokens[index]);
+		if (!ptr)
+			return (free_2d_arr(tokens));
+		index++;
+	}
+	return (tokens);
 }
 
-// Main split function
-char	**split_with_quotes(const char *input, int *count) {
-    *count = 0;
-    char **tokens = allocate_tokens();
-    const char *ptr = input;
+//void	free_split_result(char **tokens, int count)
+//{
+//	int	i;
 
-    while (*ptr != '\0' && *count < MAX_TOKENS) {
-        ptr = skip_spaces(ptr);
-        if (*ptr == '\0') break;
+//	i = 0;
+//	while (i < count)
+//	{
+//		free(tokens[i]);
+//		i++;
+//	}
+//	free(tokens);
+//}
 
-        char *token = allocate_token();
-        if (*ptr == '"' || *ptr == '\'') { // Check for either type of quote
-            ptr = extract_quoted_string(ptr, token);
-        } else {
-            ptr = extract_unquoted_string(ptr, token);
-        }
+//#include <printf.h>
+//int	main(void)
+//{
+//	const char	*input;
+//	char		**tokens;
+//	int			i;
+//	int			count;
 
-        tokens[(*count)++] = token;
-    }
-
-    return tokens;
-}
-
-// Function to free allocated memory
-void free_split_result(char **tokens, int count) {
-    for (int i = 0; i < count; i++) {
-        free(tokens[i]);
-    }
-    free(tokens);
-}
-
-// Main function to test the code
-int main() {
-    const char *input = "Hello \"'this is a test'\" 'and another' world";
-    int count;
-    char **tokens = split_with_quotes(input, &count);
-
-    printf("Tokens:\n");
-    for (int i = 0; i < count; i++) {
-        printf("Token %d: %s\n", i, tokens[i]);
-    }
-
-    free_split_result(tokens, count);
-    return 0;
-}
+//	count = 5;
+//	input = "Hello \"this is a test\" 'and another' world";
+//	tokens = split_with_quotes(input);
+//	printf("Tokens:\n");
+//	i = 0;
+//	while (i < count)
+//	{
+//		printf("Token %d: '%s'\n", i, tokens[i]);
+//		i++;
+//	}
+//	free_split_result(tokens, count);
+//	return (0);
+//}

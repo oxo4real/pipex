@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 16:52:32 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/15 09:47:18 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/16 19:47:10 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,8 @@ void	normal_pipe(int ac, char **av, char **path, char **envp);
 void	execute(t_list *lst_hd[2], char *command,
 			char **path, char **envp);
 void	ft_close(int fd1, int fd2);
+char	*ft_strncpy(char *dest, const char *src, size_t n);
+int		ft_isspace(char c);
+char	**split_with_quotes(const char *ptr);
 
 #endif

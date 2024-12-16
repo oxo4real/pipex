@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 16:52:12 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/14 18:58:56 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/16 19:48:30 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	execute(t_list *lst_hd[2], char *command,
 	if (lst_hd[1]->read_fd < 0 || lst_hd[1]->write_fd < 0)
 		return (lst_clear(lst_hd), ft_close_fd(lst_hd[1]),
 			handle_error(2, "couldn't find a file\n"));
-	parsed_command = ft_split(command, ' ');
+	parsed_command = split_with_quotes(command);
 	if (!parsed_command)
 		handle_error(53, "ran out of memory in heap\n");
 	command_path = get_command_path(parsed_command[0], path);

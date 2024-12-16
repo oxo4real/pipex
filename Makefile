@@ -1,6 +1,7 @@
 CC := cc
-SRCS := find_path.c ft_putchar_fd.c ft_putstr_fd.c ft_split.c ft_strcmp.c ft_strjoin.c ft_strncmp.c \
-		ft_strnstr.c get_command_path.c list_manipulation.c make_list.c other_utils_bonus.c gnl_utils_bonus.c
+SRCS := find_path.c ft_putchar_fd.c ft_putstr_fd.c ft_strcmp.c ft_strjoin.c \
+		ft_strnstr.c ft_strncmp.c get_command_path.c list_manipulation.c ft_split.c \
+		make_list.c other_utils_bonus.c gnl_utils_bonus.c parser.c parser_tools.c
 SRCSB := here_doc_bonus.c main_bonus.c fill_file_bonus.c gnl_bonus.c
 BUILD_DIR := build/
 OBJS := ${addprefix $(BUILD_DIR),$(SRCS:.c=.o)}
