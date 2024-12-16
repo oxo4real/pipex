@@ -38,4 +38,4 @@ re: fclean all
 
 re_bonus: fclean bonus
 
-.PHONY : all clean fclean re bonus maybe_clean_bonus maybe_clean_name
+.PHONY : all clean fclean re bonus re_bonus
