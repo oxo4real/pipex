@@ -14,26 +14,19 @@ all: $(BUILD_DIR) $(NAME)
 $(BUILD_DIR):
 	@mkdir $(BUILD_DIR)
  
-$(NAME): maybe_clean_name $(OBJS) $(BUILD_DIR)main.o
-	$(if $(strip $(filter-out maybe_clean_name, $?)), \
-		$(CC) $(CFLAGS) -o $@ $(filter-out maybe_clean_name, $^), \
-		@echo "make: Nothing to be done for \`all'.")
+$(NAME): $(OBJS) $(BUILD_DIR)main.o
+	$(if $(wildcard $(.BONUS)),@rm -f $(.BONUS) $(OBJSB))
+	$(CC) $(CFLAGS) -o $@ $^
 
 $(BUILD_DIR)%.o: %.c pipex_bonus.h
 	$(CC) -c $(CFLAGS) -o $@ $<
 
 bonus: $(BUILD_DIR) $(.BONUS)
 
-$(.BONUS): maybe_clean_bonus $(OBJS) $(OBJSB) 
-	$(if $(strip $(filter-out maybe_clean_bonus, $?)), \
-		$(CC) $(CFLAGS) -o $(NAME) $(filter-out maybe_clean_bonus, $^); touch $(.BONUS), \
-		@echo "make: Nothing to be done for \`bonus'.")
-
-maybe_clean_name:
-	$(if $(wildcard $(.BONUS)),@rm -f $(.BONUS) $(OBJSB))
-
-maybe_clean_bonus:
+$(.BONUS): $(OBJS) $(OBJSB) 
 	$(if $(wildcard $(.BONUS)),,@rm -f $(BUILD_DIR)main.o)
+	$(CC) $(CFLAGS) -o $(NAME) $^
+	@touch $(.BONUS)
 
 clean:
 	@rm -rf $(BUILD_DIR)
