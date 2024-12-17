@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:11:47 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/16 20:11:05 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/17 10:23:39 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	**split_with_quotes(const char *ptr)
 	int			count;
 
 	count = count_tokens(ptr);
-	tokens = malloc(count * sizeof(char *) + 1);
+	tokens = malloc((count + 1) * sizeof(char *));
 	if (!tokens)
 		return (NULL);
 	tokens[count] = NULL;

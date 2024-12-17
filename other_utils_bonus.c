@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 16:52:12 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/16 20:20:28 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/17 10:25:27 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	execute(t_list *lst_hd[2], char *command,
 	char	*command_path;
 
 	if (lst_hd[1]->read_fd < 0 || lst_hd[1]->write_fd < 0)
-		return (lst_clear(lst_hd), ft_close_fd(lst_hd[1]),
+		return (ft_close_fd(lst_hd[1]), lst_clear(lst_hd),
 			handle_error(2, "couldn't find a file\n"));
 	parsed_command = split_with_quotes(command);
 	if (!parsed_command)
