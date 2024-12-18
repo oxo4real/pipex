@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 16:52:32 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 13:01:30 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 13:15:41 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@
 # include <limits.h>
 # include <stdio.h>
 
-typedef struct s_list
-{
-	int				read_fd;
-	int				write_fd;
-	struct s_list	*next;
-}				t_list;
-
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 1024
 # endif
@@ -35,16 +28,11 @@ char		*ft_strdup(const char *s);
 char		*custom_strjoin(char *s1, char *s2);
 int			find_chr(char *str, char c);
 char		*get_next_line(int fd);
-t_list		*make_list(int num_of_pipes, int read_file, int write_file);
-t_list		*lst_last(t_list *lst);
-t_list		*lst_new(int read_fd);
 size_t		ft_strlen(const char *s);
-void		*lst_clear(t_list **lst);
 void		*free_2d_arr(char **arr);
 void		handl_err(int exit_num, char *err_str);
 void		ft_putstr_fd(char const *s, int fd);
 void		ft_putchar_fd(char c, int fd);
-void		ft_lstadd_back(t_list **lst, t_list *new_element);
 char		**ft_split(char const *s, char c);
 char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char		*ft_strjoin(char const *s1, char const *s2);
