@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 19:23:35 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 13:49:03 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 14:26:00 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ char	*get_command_path(char *command, char **path)
 	{
 		path_slash = ft_strjoin(path[i++], "/");
 		if (!path_slash)
-			return (perror("pipex: malloc: "), (NULL));
+			return (perror("pipex: malloc"), (NULL));
 		command_path = ft_strjoin(path_slash, command);
 		if (!command_path)
 		{
 			free(path_slash);
-			return (perror("pipex: malloc: "), (NULL));
+			return (perror("pipex: malloc"), (NULL));
 		}
 		if (access(command_path, X_OK) == 0)
 			return (command_path);

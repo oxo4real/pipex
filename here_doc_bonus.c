@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:20:31 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 13:02:00 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 14:26:00 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static char	**parsing(char *command, char **path)
 	parsed_command = split_with_quotes(command);
 	if (!parsed_command)
 	{
-		perror("pipex: malloc: ");
+		perror("pipex: malloc");
 		exit(1);
 	}
 	command_path = get_command_path(parsed_command[0], path);
