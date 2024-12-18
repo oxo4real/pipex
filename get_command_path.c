@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 19:23:35 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 14:26:00 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 14:55:54 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ char	*get_command_path(char *command, char **path)
 		if (access(command_path, X_OK) == 0)
 			return (command_path);
 	}
-	return (ft_putstr_fd("pipex: command not found: ", 2),
-		ft_putstr_fd(command, 2), ft_putstr_fd("\n", 2), (NULL));
+	return (ft_putstr_fd("pipex: ", 2), ft_putstr_fd(command, 2),
+		ft_putstr_fd(": command not found\n", 2), (NULL));
 }
