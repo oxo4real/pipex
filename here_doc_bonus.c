@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:20:31 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 16:16:09 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 17:00:16 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,7 @@ static void	no_such_file_or_directory(char *file)
 static void	permission_denied(char *file)
 {
 	ft_putstr_fd("pipex: ", 2);
-	ft_putstr_fd(file, 2);
-	ft_putstr_fd(": Permission denied\n", 2);
+	perror(file);
 }
 
 int	set_in_out_(int in_out[2], int i, int ac, char **av)
