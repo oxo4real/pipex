@@ -6,7 +6,7 @@ SRCSB := here_doc_bonus.c main_bonus.c fill_file_bonus.c gnl_bonus.c execute__bo
 BUILD_DIR := build/
 OBJS := ${addprefix $(BUILD_DIR),$(SRCS:.c=.o)}
 OBJSB := ${addprefix $(BUILD_DIR),$(SRCSB:.c=.o)}
-CFLAGS := -Wall -Wextra -Werror
+CFLAGS := -Wall -Wextra -Werror -g -fsanitize=address
 .BONUS := $(BUILD_DIR).bonus
 NAME := pipex
 

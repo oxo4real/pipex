@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 19:23:35 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/17 18:19:27 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 13:49:03 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	*free_2d_arr(char **arr)
 	int	i;
 
 	i = 0;
+	if (!arr)
+		return (NULL);
 	while (arr[i])
 	{
 		free(arr[i]);
@@ -33,9 +35,9 @@ char	*get_command_path(char *command, char **path)
 	char	*command_path;
 
 	if (access(command, X_OK) == 0)
-		return (command);
+		return (ft_strdup(command));
 	i = 0;
-	while (path[i])
+	while (path && path[i])
 	{
 		path_slash = ft_strjoin(path[i++], "/");
 		if (!path_slash)
