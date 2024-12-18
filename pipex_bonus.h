@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/08 16:52:32 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 13:15:41 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 17:12:37 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include <limits.h>
 # include <stdio.h>
 
 # ifndef BUFFER_SIZE
