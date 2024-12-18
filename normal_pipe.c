@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:51:00 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 14:26:00 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 16:16:16 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,13 @@ void	normal_pipe(int ac, char **av, char **path, char **envp)
 		pid = fork();
 		if (pid == -1)
 			return (free_2d_arr(path),
-				handl_err(1, "pipex: fork: Resource temporarily unavailable"));
+				handl_err(1, "pipex: fork: Resource temporarily unavailable\n"));
 		if (pid == 0)
 			execute(in_out, parsing(av[i], path), envp, path);
 		ft_close(in_out[0], in_out[1]);
 		i++;
 	}
+	ft_close(in_out[0], in_out[1]);
 	free_2d_arr(path);
 	i = 0;
 	waitpid(pid, &in_out[0], 0);

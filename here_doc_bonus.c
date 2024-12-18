@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:20:31 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 14:26:00 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 16:16:09 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,17 @@ void	ft_here_doc(int ac, char **av, char **path, char **envp)
 		pid = fork();
 		if (pid == -1)
 			return (free_2d_arr(path),
-				handl_err(1, "pipex: fork: Resource temporarily unavailable"));
+				handl_err(1, "pipex: fork: Resource temporarily unavailable\n"));
 		if (pid == 0)
 			execute_(in_out, parsing(av[i], path), envp, path);
 		ft_close(in_out[0], in_out[1]);
 		i++;
 	}
 	free_2d_arr(path);
+	ft_close(in_out[0], in_out[1]);
 	i = 0;
 	waitpid(pid, &i, 0);
 	while (i++ < ac - 3)
 		wait(NULL);
-	unlink("/tmp/sldkffalkewhfkasdfawe");
-	exit(WEXITSTATUS(i));
+	return (unlink("/tmp/sldkffalkewhfkasdfawe"), exit(WEXITSTATUS(i)));
 }

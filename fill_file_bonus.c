@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:02:30 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 12:49:09 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 16:06:23 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,19 @@ int	fill_file(int read_file, char *limiter)
 
 	if (read_file < 0)
 		return (0);
-	line = get_next_line(0);
-	if (!line)
+	limiter = ft_strjoin(limiter, "\n");
+	if (!limiter)
 		return (0);
-	while (ft_strlen(line) - 1 != ft_strlen(limiter)
-		|| ft_strncmp(line, limiter, ft_strlen(line) - 1) != 0)
+	while (1)
 	{
-		write(read_file, line, ft_strlen(line));
+		write(1, "> ", 2);
 		line = get_next_line(0);
-		if (!line)
-			return (1);
+		if (!line || ft_strncmp(line, limiter, ft_strlen(line)) == 0)
+			break ;
+		write(read_file, line, ft_strlen(line));
+		free(line);
 	}
+	free(line);
+	free(limiter);
 	return (1);
 }

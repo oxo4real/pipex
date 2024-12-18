@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/14 19:23:35 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 14:55:54 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 15:59:27 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,10 @@ char	*get_command_path(char *command, char **path)
 			free(path_slash);
 			return (perror("pipex: malloc"), (NULL));
 		}
+		free(path_slash);
 		if (access(command_path, X_OK) == 0)
 			return (command_path);
+		free(command_path);
 	}
 	return (ft_putstr_fd("pipex: ", 2), ft_putstr_fd(command, 2),
 		ft_putstr_fd(": command not found\n", 2), (NULL));
