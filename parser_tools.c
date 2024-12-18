@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:29:09 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/16 20:11:19 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/17 18:23:40 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,18 @@ char	*ft_strncpy(char *dest, const char *src, size_t n)
 		i++;
 	}
 	return (dest);
+}
+
+const char	*skip_quoted_string(const char *ptr)
+{
+	char	quote;
+
+	quote = *ptr++;
+	while (*ptr && *ptr != quote)
+		ptr++;
+	if (*ptr == quote)
+		ptr++;
+	return (ptr);
 }
 //void	*free_2d_arr(char **arr)
 //{

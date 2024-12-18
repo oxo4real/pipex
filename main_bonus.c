@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 13:10:48 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/14 20:06:17 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:59:42 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,23 @@ int	main(int argc, char **argv, char **envp)
 	char	**path;
 
 	if (argc < 5)
-		handle_error(50, "too few arguments to programme\n");
+		handl_err(1, "too few arguments to programme\n");
 	path = find_path(envp);
 	if (ft_strcmp(argv[1], "here_doc") != 0)
 		normal_pipe(argc, argv, path, envp);
 	else
 	{
 		if (argc < 6)
-			handle_error(50, "too few arguments to programme\n");
+		{
+			free_2d_arr(path);
+			handl_err(1, "too few arguments to programme\n");
+		}
 		if (!fill_file(open("/tmp/sldkffalkewhfkasdfawe",
 					O_WRONLY | O_TRUNC | O_CREAT, 0600), argv[2]))
 		{
 			unlink("/tmp/sldkffalkewhfkasdfawe");
-			handle_error(10, "here_doc failed\n");
+			free_2d_arr(path);
+			handl_err(10, "here_doc failed\n");
 		}
 		ft_here_doc(argc, argv, path, envp);
 	}

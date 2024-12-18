@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 12:02:30 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/14 18:59:04 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 12:49:09 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	fill_file(int read_file, char *limiter)
 	{
 		write(read_file, line, ft_strlen(line));
 		line = get_next_line(0);
+		if (!line)
+			return (1);
 	}
 	return (1);
 }

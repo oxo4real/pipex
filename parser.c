@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/16 18:11:47 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/17 10:23:39 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/17 18:23:07 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,38 +14,28 @@
 
 const char	*skip_spaces(const char *ptr)
 {
-	const char	*result;
-
-	result = ptr;
-	while (ft_isspace(*result))
-		result++;
-	return (result);
+	while (ft_isspace(*ptr))
+		ptr++;
+	return (ptr);
 }
 
 int	count_tokens(const char *input)
 {
 	int			count;
 	const char	*ptr;
-	char		quote;
 
 	count = 0;
 	ptr = input;
-	while (*ptr != '\0')
+	while (*ptr)
 	{
 		ptr = skip_spaces(ptr);
-		if (*ptr == '\0')
+		if (!*ptr)
 			break ;
 		if (*ptr == '"' || *ptr == '\'')
-		{
-			quote = *ptr++;
-			while (*ptr != '\0' && *ptr != quote && ptr++)
-				;
-			if (*ptr == quote && ptr++)
-				ptr++;
-		}
+			ptr = skip_quoted_string(ptr);
 		else
-			while (*ptr != '\0' && !ft_isspace(*ptr) && ptr++)
-				;
+			while (*ptr && !ft_isspace(*ptr))
+				ptr++;
 		count++;
 	}
 	return (count);
@@ -97,9 +87,9 @@ const char	*extract_unquoted_string(const char *ptr, char **token)
 
 char	**split_with_quotes(const char *ptr)
 {
-	char		**tokens;
-	int			index;
-	int			count;
+	char	**tokens;
+	int		index;
+	int		count;
 
 	count = count_tokens(ptr);
 	tokens = malloc((count + 1) * sizeof(char *));

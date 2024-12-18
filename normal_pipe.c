@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
+/*   normal_pipe.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/13 16:20:31 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 13:02:00 by aaghzal          ###   ########.fr       */
+/*   Created: 2024/12/17 11:51:00 by aaghzal           #+#    #+#             */
+/*   Updated: 2024/12/18 12:59:42 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ static void	permission_denied(char *file)
 	ft_putstr_fd(": Permission denied\n", 2);
 }
 
-int	set_in_out_(int in_out[2], int i, int ac, char **av)
+int	set_in_out(int in_out[2], int i, int ac, char **av)
 {
 	int			pipe_fd[2];
 	static int	next_in;
 
 	if (i == -1)
 		return (close(next_in), 1);
-	if (i == 3)
-		next_in = open("/tmp/sldkffalkewhfkasdfawe", O_RDONLY);
+	if (i == 2)
+		next_in = open(av[1], O_RDONLY);
 	if (next_in < 0)
 		no_such_file_or_directory(av[1]);
 	in_out[0] = next_in;
@@ -47,7 +47,7 @@ int	set_in_out_(int in_out[2], int i, int ac, char **av)
 	}
 	else
 	{
-		in_out[1] = open(av[ac - 1], O_WRONLY | O_APPEND | O_CREAT, 0644);
+		in_out[1] = open(av[ac - 1], O_WRONLY | O_TRUNC | O_CREAT, 0644);
 		if (in_out[1] < 0)
 			permission_denied(av[ac - 1]);
 	}
@@ -73,31 +73,30 @@ static char	**parsing(char *command, char **path)
 	return (parsed_command);
 }
 
-void	ft_here_doc(int ac, char **av, char **path, char **envp)
+void	normal_pipe(int ac, char **av, char **path, char **envp)
 {
 	int	in_out[2];
 	int	pid;
 	int	i;
 
-	i = 3;
+	i = 2;
 	while (i < ac - 1)
 	{
-		if (!set_in_out_(in_out, i, ac, av))
+		if (!set_in_out(in_out, i, ac, av))
 			perror("pipex: pipe: ");
 		pid = fork();
 		if (pid == -1)
 			return (free_2d_arr(path),
 				handl_err(1, "pipex: fork: Resource temporarily unavailable"));
 		if (pid == 0)
-			execute_(in_out, parsing(av[i], path), envp, path);
+			execute(in_out, parsing(av[i], path), envp, path);
 		ft_close(in_out[0], in_out[1]);
 		i++;
 	}
 	free_2d_arr(path);
 	i = 0;
-	waitpid(pid, &i, 0);
+	waitpid(pid, &in_out[0], 0);
 	while (i++ < ac - 3)
 		wait(NULL);
-	unlink("/tmp/sldkffalkewhfkasdfawe");
-	exit(WEXITSTATUS(i));
+	exit(WEXITSTATUS(in_out[0]));
 }
