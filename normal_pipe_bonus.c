@@ -6,11 +6,12 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:51:00 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 16:16:16 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 17:44:20 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
+#include <stdio.h>
 
 static void	no_such_file_or_directory(char *file)
 {
@@ -22,8 +23,7 @@ static void	no_such_file_or_directory(char *file)
 static void	permission_denied(char *file)
 {
 	ft_putstr_fd("pipex: ", 2);
-	ft_putstr_fd(file, 2);
-	ft_putstr_fd(": Permission denied\n", 2);
+	perror(file);
 }
 
 int	set_in_out(int in_out[2], int i, int ac, char **av)
@@ -83,7 +83,7 @@ void	normal_pipe(int ac, char **av, char **path, char **envp)
 	while (i < ac - 1)
 	{
 		if (!set_in_out(in_out, i, ac, av))
-			perror("pipex: pipe: ");
+			perror("pipex: pipe");
 		pid = fork();
 		if (pid == -1)
 			return (free_2d_arr(path),

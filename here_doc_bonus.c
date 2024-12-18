@@ -6,7 +6,7 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/13 16:20:31 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 17:00:16 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/18 17:48:42 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	ft_here_doc(int ac, char **av, char **path, char **envp)
 	while (i < ac - 1)
 	{
 		if (!set_in_out_(in_out, i, ac, av))
-			perror("pipex: pipe: ");
+			perror("pipex: pipe");
 		pid = fork();
 		if (pid == -1)
 			return (free_2d_arr(path),
@@ -95,8 +95,8 @@ void	ft_here_doc(int ac, char **av, char **path, char **envp)
 	free_2d_arr(path);
 	ft_close(in_out[0], in_out[1]);
 	i = 0;
-	waitpid(pid, &i, 0);
+	waitpid(pid, &in_out[0], 0);
 	while (i++ < ac - 3)
 		wait(NULL);
-	return (unlink("/tmp/sldkffalkewhfkasdfawe"), exit(WEXITSTATUS(i)));
+	return (unlink("/tmp/sldkffalkewhfkasdfawe"), exit(WEXITSTATUS(in_out[0])));
 }
