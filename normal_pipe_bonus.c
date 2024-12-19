@@ -6,12 +6,11 @@
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:51:00 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/19 07:51:01 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/19 08:06:05 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex_bonus.h"
-#include <stdio.h>
 
 static void	no_such_file_or_directory(char *file)
 {
