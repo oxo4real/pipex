@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   normal_pipe.c                                      :+:      :+:    :+:   */
+/*   normal_pipe_bonus.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aaghzal <aaghzal@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/17 11:51:00 by aaghzal           #+#    #+#             */
-/*   Updated: 2024/12/18 17:44:20 by aaghzal          ###   ########.fr       */
+/*   Updated: 2024/12/19 07:51:01 by aaghzal          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,16 @@ static char	**parsing(char *command, char **path)
 	parsed_command = split_with_quotes(command);
 	if (!parsed_command)
 	{
+		free_2d_arr(path);
 		perror("pipex: malloc");
 		exit(1);
 	}
 	command_path = get_command_path(parsed_command[0], path);
 	if (!command_path)
+	{
+		free_2d_arr(path);
 		exit(127);
+	}
 	free(parsed_command[0]);
 	parsed_command[0] = command_path;
 	return (parsed_command);
