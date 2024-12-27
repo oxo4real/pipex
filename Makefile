@@ -35,8 +35,6 @@ clean:
 fclean: clean
 	@rm -f $(NAME)
 
-re: fclean all
-
-rebonus: fclean bonus
+re: fclean $(if $(wildcard $(.BONUS)),bonus,all)
 
 .PHONY : all clean fclean re bonus rebonus
